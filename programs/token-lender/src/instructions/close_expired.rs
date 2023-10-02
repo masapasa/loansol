@@ -10,10 +10,8 @@ pub fn close_expired(ctx: Context<CloseExpired>, loan_id: u8) -> Result<()> {
     let loan_escrow_bump = ctx.accounts.loan_escrow.bump;
 
     msg!("Check to make sure the loan is expired");
-    assert!(loan_is_expired(
-        &ctx.accounts.clock,
-        &ctx.accounts.loan_escrow,
-    ));
+    assert!(ctx.accounts.loan_escrow.is_expired(ctx.accounts.clock.slot));
+
 
     msg!("Collect receipt tokens from the lender");
     transfer_token(

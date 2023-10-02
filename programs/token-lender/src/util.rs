@@ -7,8 +7,8 @@ use crate::state::LoanEscrow;
 
 pub const SOL_USD_PRICE_FEED_ID: &str = "H6ARHf6YXhGYeQfUzQNGk6rDNnLBQKrenN712K4AQJEG";
 
-pub fn to_pubkey(string: &str) -> Pubkey {
-    Pubkey::from_str(string).expect("Error parsing public key from string.")
+pub fn to_pubkey(string: &str) -> Result<Pubkey, ProgramError> {
+    Pubkey::from_str(string).map_err(|_| ProgramError::InvalidArgument)
 }
 
 pub fn burn_signed<'a>(

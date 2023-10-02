@@ -12,4 +12,12 @@ pub struct LoanEscrow {
 
 impl LoanEscrow {
     pub const SEED_PREFIX: &'static str = "loan_escrow";
+
+    pub fn is_expired(&self, current_slot: u64) -> bool {
+        current_slot > self.expiry_timestamp
+    }
+
+    pub fn is_fully_paid(&self, usdc_ata_amount: u64) -> bool {
+        usdc_ata_amount >= self.deposit
+    }
 }

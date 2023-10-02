@@ -10,10 +10,8 @@ pub fn close_returned(ctx: Context<CloseReturned>, loan_id: u8) -> Result<()> {
     let loan_escrow_bump = ctx.accounts.loan_escrow.bump;
 
     msg!("Check to make sure the loan has been returned");
-    assert!(loan_is_paid(
-        &ctx.accounts.loan_escrow,
-        &ctx.accounts.loan_escrow_usdc_ata,
-    ));
+    assert!(ctx.accounts.loan_escrow.is_fully_paid(ctx.accounts.loan_escrow_usdc_ata.amount));
+
 
     msg!("Collect receipt tokens from the lender");
     transfer_token(

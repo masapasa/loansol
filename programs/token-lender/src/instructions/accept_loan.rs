@@ -20,7 +20,9 @@ pub fn accept_loan(ctx: Context<AcceptLoan>, loan_id: u8) -> Result<()> {
     {
         return Err(ErrorCode::PythError.into());
     }
-    let sol_usd_price_feed = load_price_feed_from_account_info(&ctx.accounts.pyth_account).unwrap();
+    let sol_usd_price_feed = load_price_feed_from_account_info(&ctx.accounts.pyth_account)
+    .map_err(|_| ErrorCode::PythError)?;
+
     // TODO
     let _current_price = sol_usd_price_feed.get_price_unchecked();
 
