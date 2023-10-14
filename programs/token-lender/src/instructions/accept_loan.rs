@@ -113,7 +113,7 @@ pub struct AcceptLoan<'info> {
     #[account(
         init_if_needed,
         payer = borrower,
-        associated_token::mint = usdc_mint,
+         = usdc_mint,
         associated_token::authority = loan_escrow,
     )]
     pub loan_escrow_usdc_ata: Box<Account<'info, token::TokenAccount>>,
@@ -122,7 +122,7 @@ pub struct AcceptLoan<'info> {
     pub borrower: Signer<'info>,
     #[account(
         mut,
-        associated_token::mint = usdc_mint,
+         = usdc_mint,
         associated_token::authority = borrower,
     )]
     pub borrower_usdc_ata: Box<Account<'info, token::TokenAccount>>,
@@ -135,7 +135,7 @@ pub struct AcceptLoan<'info> {
     #[account(
         init_if_needed,
         payer = borrower,
-        associated_token::mint = loan_note_mint,
+         = loan_note_mint,
         associated_token::authority = lender,
     )]
     pub lender_loan_note_mint_ata: Box<Account<'info, token::TokenAccount>>,

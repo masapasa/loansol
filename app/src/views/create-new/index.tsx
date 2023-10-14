@@ -1,10 +1,12 @@
 import { BN } from '@project-serum/anchor';
+import { createAssociatedTokenAccountIdempotentInstruction, getAssociatedTokenAddressSync } from '@solana/spl-token';
 import { useConnection, useWallet } from '@solana/wallet-adapter-react';
 import { Transaction } from '@solana/web3.js';
 import BalanceSection from 'components/BalanceSection';
 import useAnchorProgram from 'hooks/useAnchorProgram';
 import { FC, useEffect, useState } from 'react';
 import useLoansStore from 'stores/useLoansStore';
+import { USDC_MINT } from 'utils/const';
 import {
     calculate3MinExpiration,
     calculateEstimatedCollateral,
@@ -38,16 +40,28 @@ export const CreateNewView: FC = ({}) => {
     const create = async () => {
         const loanId = loans.length + 1;
         const expiration = await calculate3MinExpiration(connection);
+        const ata = getAssociatedTokenAddressSync(
+            USDC_MINT,
+            wallet.publicKey,
+        );
         const sx = await wallet.sendTransaction(
             new Transaction().add(
-                await createCreateNewLoanInstruction(
-                    program,
-                    loanId,
-                    new BN(depositAmount),
-                    new BN(expiration),
+                createAssociatedTokenAccountIdempotentInstruction(
                     wallet.publicKey,
-                ),
+                    ata,
+                    wallet.publicKey,
+                    USDC_MINT,
+                )
             ),
+            // .add(
+            //     await createCreateNewLoanInstruction(
+            //         program,
+            //         loanId,
+            //         new BN(depositAmount),
+            //         new BN(expiration),
+            //         wallet.publicKey,
+            //     ),
+            // ),
             connection,
         );
         connection.confirmTransaction(sx);
