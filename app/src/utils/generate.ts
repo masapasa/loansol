@@ -44,6 +44,3 @@ console.log("loanEscrow:", loanEscrow.toString());
 console.log("loanEscrowUsdcAta:", loanEscrowUsdcAta.toString());
 console.log("lender:", lender.publicKey.toString());
 console.log("lenderUsdcAta:", lenderUsdcAta.toString());
-explorer Mmgtjney9SUy5vwGUrCXputUGS4Mmoeod2k7CLB5fvyUUrPYaUBc19awGcUcCfKJsM8khb2FXhM9d5wKwksCnik
--s DGfv1Qo6BEWN6xZLhxcF4UEdN1E4tQ2rdn2o7bZzHW7j
-+5 FAvSqnCouUUnTuUnrnjZi86voAAFMByX2eZPYS21Ekeq
